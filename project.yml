@@ -46,6 +46,8 @@ targets:
       - path: Services
       - path: Views/Components
       - path: Views/iPad
+    resources:
+      - path: Resources
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: dc.MiniDrivePad

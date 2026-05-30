@@ -1,0 +1,73 @@
+{
+  "version": 8,
+  "name": "MiniDrive Offline Dark",
+  "sources": {
+    "guadalajara": {
+      "type": "vector",
+      "url": "mbtiles:///guadalajara"
+    }
+  },
+  "layers": [
+    {
+      "id": "background",
+      "type": "background",
+      "paint": {
+        "background-color": "#050E1A"
+      }
+    },
+    {
+      "id": "landuse",
+      "type": "fill",
+      "source": "guadalajara",
+      "source-layer": "landuse",
+      "paint": {
+        "fill-color": "#0A1628",
+        "fill-opacity": 0.8
+      }
+    },
+    {
+      "id": "roads-minor",
+      "type": "line",
+      "source": "guadalajara",
+      "source-layer": "transportation",
+      "filter": ["in", "class", "minor", "service", "track"],
+      "paint": {
+        "line-color": "#1A2A3A",
+        "line-width": 1
+      }
+    },
+    {
+      "id": "roads-major",
+      "type": "line",
+      "source": "guadalajara",
+      "source-layer": "transportation",
+      "filter": ["in", "class", "primary", "secondary", "tertiary"],
+      "paint": {
+        "line-color": "#1E3A5F",
+        "line-width": 2
+      }
+    },
+    {
+      "id": "roads-motorway",
+      "type": "line",
+      "source": "guadalajara",
+      "source-layer": "transportation",
+      "filter": ["in", "class", "motorway", "trunk"],
+      "paint": {
+        "line-color": "#00C8FF",
+        "line-width": 3,
+        "line-opacity": 0.6
+      }
+    },
+    {
+      "id": "buildings",
+      "type": "fill",
+      "source": "guadalajara",
+      "source-layer": "building",
+      "paint": {
+        "fill-color": "#0D1E2E",
+        "fill-outline-color": "#1A2A3A"
+      }
+    }
+  ]
+}

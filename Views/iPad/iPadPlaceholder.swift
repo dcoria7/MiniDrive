@@ -1,1 +1,1 @@
-// iPad dashboard views — Módulo 3
+// iPad views — see iPadDashboardView.swift and Modes/
