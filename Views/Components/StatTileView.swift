@@ -40,10 +40,10 @@ struct StatTileView: View {
         .padding(.horizontal, 16)
         .padding(.vertical, 14)
         .frame(maxWidth: .infinity, alignment: .leading)
-        .background(colors.surface, in: RoundedRectangle(cornerRadius: 16))
+        .glassEffect(.regular, in: RoundedRectangle(cornerRadius: 16))
         .overlay(
             RoundedRectangle(cornerRadius: 16)
-                .strokeBorder(colors.primary.opacity(0.12), lineWidth: 1)
+                .strokeBorder(colors.primary.opacity(0.22), lineWidth: 1)
         )
     }
 }

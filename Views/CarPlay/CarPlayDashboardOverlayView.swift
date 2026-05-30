@@ -24,8 +24,9 @@ struct CarPlayDashboardView: View {
                         SpeedFocusLayout(geo: geo)
                     }
                 }
+                .id(carPlayState.currentMode)
+                .transition(.opacity.combined(with: .scale(scale: 0.98)))
                 .padding(.top, 36)
-                .animation(.easeInOut(duration: 0.35), value: carPlayState.currentMode)
 
                 ThemeTransitionOverlay(
                     label: themeManager.transitionLabel,

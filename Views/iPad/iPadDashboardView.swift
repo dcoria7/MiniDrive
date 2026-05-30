@@ -14,8 +14,8 @@ struct iPadDashboardView: View {
 
             if receiver.isConnected {
                 modeContent
-                    .animation(.easeInOut(duration: 0.35), value: currentMode)
-                    .transition(.opacity)
+                    .id(currentMode)
+                    .transition(.opacity.combined(with: .scale(scale: 0.97)))
             } else {
                 waitingView
             }
@@ -91,8 +91,7 @@ struct iPadDashboardView: View {
             .foregroundStyle(colors.primary)
             .padding(.horizontal, 14)
             .padding(.vertical, 10)
-            .background(colors.surface.opacity(0.85), in: Capsule())
-            .overlay(Capsule().strokeBorder(colors.primary.opacity(0.25), lineWidth: 1))
+            .glassEffect(.regular.interactive(), in: Capsule())
         }
     }
 

@@ -52,7 +52,9 @@ final class CarPlaySceneDelegate: UIResponder, CPTemplateApplicationSceneDelegat
 
     private func showModeSelector(controller: CPInterfaceController) {
         let template = ModeSelector.makeTemplate(currentMode: carPlayState.currentMode) { [weak self] mode in
-            self?.carPlayState.currentMode = mode
+            withAnimation(.easeInOut(duration: 0.35)) {
+                self?.carPlayState.currentMode = mode
+            }
             controller.popTemplate(animated: true)
         }
         controller.pushTemplate(template, animated: true)

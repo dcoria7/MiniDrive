@@ -63,12 +63,49 @@ enum MiniTheme: String, CaseIterable, Identifiable {
         }
     }
 
-    var backgroundGradient: LinearGradient {
-        LinearGradient(
-            colors: [colors.background, colors.surface],
-            startPoint: .top,
-            endPoint: .bottom
+    var backgroundGradient: MeshGradient {
+        MeshGradient(
+            width: 3,
+            height: 3,
+            points: [
+                [0.0, 0.0], [0.5, 0.0], [1.0, 0.0],
+                [0.0, 0.5], [0.5, 0.5], [1.0, 0.5],
+                [0.0, 1.0], [0.5, 1.0], [1.0, 1.0]
+            ],
+            colors: meshColors
         )
+    }
+
+    private var meshColors: [Color] {
+        let bg = colors.background
+        let sf = colors.surface
+        let pr = colors.primary
+        switch self {
+        case .goKart:
+            return [
+                bg,               bg,               bg,
+                bg,               sf,               bg,
+                bg,               sf.opacity(0.85), pr.opacity(0.07)
+            ]
+        case .timeless:
+            return [
+                bg,               pr.opacity(0.05), bg,
+                bg,               sf,               bg,
+                bg,               sf.opacity(0.85), bg
+            ]
+        case .vivid:
+            return [
+                pr.opacity(0.06), bg,               bg,
+                bg,               sf,               bg,
+                bg,               sf.opacity(0.85), bg
+            ]
+        case .iceBlue:
+            return [
+                bg,               pr.opacity(0.06), bg,
+                bg,               sf,               bg,
+                bg,               sf.opacity(0.85), bg
+            ]
+        }
     }
 
     /// Jingle/experience name shown during theme switch animation
