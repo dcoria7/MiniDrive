@@ -1,0 +1,60 @@
+name: MiniDrive
+
+options:
+  bundleIdPrefix: dc
+  deploymentTarget:
+    iOS: "26.0"
+  createIntermediateGroups: true
+
+packages:
+  MapLibre:
+    url: https://github.com/maplibre/maplibre-gl-native-distribution
+    from: "6.0.0"
+
+targets:
+  MiniDrive:
+    type: application
+    platform: iOS
+    deploymentTarget: "26.0"
+    sources:
+      - path: App
+      - path: Models
+      - path: Services
+      - path: Views/Components
+      - path: Views/iPhone
+      - path: Views/CarPlay
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: dc.MiniDrive
+        INFOPLIST_FILE: Supporting/Info.plist
+        CODE_SIGN_ENTITLEMENTS: MiniDrive.entitlements
+        TARGETED_DEVICE_FAMILY: "1"
+        SWIFT_VERSION: "6.0"
+        SWIFT_STRICT_CONCURRENCY: complete
+    dependencies:
+      - sdk: CarPlay.framework
+      - sdk: CoreLocation.framework
+      - sdk: MultipeerConnectivity.framework
+
+  MiniDrivePad:
+    type: application
+    platform: iOS
+    deploymentTarget: "26.0"
+    sources:
+      - path: AppIPad
+      - path: Models
+      - path: Services
+      - path: Views/Components
+      - path: Views/iPad
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: dc.MiniDrivePad
+        INFOPLIST_FILE: Supporting/InfoPad.plist
+        TARGETED_DEVICE_FAMILY: "2"
+        SWIFT_VERSION: "6.0"
+        SWIFT_STRICT_CONCURRENCY: complete
+    dependencies:
+      - sdk: CoreLocation.framework
+      - sdk: MultipeerConnectivity.framework
+      - package: MapLibre
+        product: MapLibre

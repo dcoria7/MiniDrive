@@ -1,0 +1,12 @@
+.DS_Store
+*.xcodeproj/xcuserdata/
+*.xcworkspace/xcuserdata/
+*.xcworkspace/xcshareddata/
+DerivedData/
+*.ipa
+*.dSYM.zip
+*.dSYM
+build/
+Pods/
+.build/
+Resources/guadalajara.mbtiles
