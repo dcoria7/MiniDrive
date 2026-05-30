@@ -1,140 +1,213 @@
 import SwiftUI
+import MapKit
 
-// MARK: - CarPlayDashboardOverlayView
-/// Compact Mini-style dashboard designed for the CarPlay screen.
-/// Landscape-first layout: speedometer left, compass + stats right.
+// MARK: - CarPlayDashboardView
+// Mode-aware dashboard for CarPlay (1280×480, Mazda CX-30 2023)
 
-struct CarPlayDashboardOverlayView: View {
+struct CarPlayDashboardView: View {
+    @Environment(LocationService.self) private var location
+    @Environment(ThemeManager.self) private var themeManager
+    @Environment(CarPlayState.self) private var carPlayState
+
+    var body: some View {
+        GeometryReader { geo in
+            ZStack {
+                themeManager.current.backgroundGradient.ignoresSafeArea()
+
+                Group {
+                    switch carPlayState.currentMode {
+                    case .balanced:
+                        BalancedLayout(geo: geo)
+                    case .mapFocus:
+                        MapFocusLayout(geo: geo)
+                    case .speedFocus:
+                        SpeedFocusLayout(geo: geo)
+                    }
+                }
+                .padding(.top, 36)
+                .animation(.easeInOut(duration: 0.35), value: carPlayState.currentMode)
+
+                ThemeTransitionOverlay(
+                    label: themeManager.transitionLabel,
+                    isVisible: themeManager.isTransitioning
+                )
+            }
+        }
+    }
+}
+
+// MARK: - BALANCED  (Speedo 32% | Map 42% | Compass+Stats 26%)
+
+private struct BalancedLayout: View {
+    let geo: GeometryProxy
     @Environment(LocationService.self) private var location
     @Environment(ThemeManager.self) private var themeManager
 
     private var colors: ThemeColors { themeManager.current.colors }
 
     var body: some View {
-        ZStack {
-            // Background
-            themeManager.current.backgroundGradient
-                .ignoresSafeArea()
+        HStack(spacing: 0) {
+            SpeedometerView(speed: location.speedKmh, maxSpeed: 240, theme: themeManager.current)
+                .frame(width: geo.size.width * 0.32, height: geo.size.height)
 
-            GeometryReader { geo in
-                HStack(spacing: 0) {
-                    // LEFT — Main speedometer
-                    SpeedometerView(
-                        speed: location.speedKmh,
-                        maxSpeed: 240,
-                        theme: themeManager.current
-                    )
-                    .frame(width: geo.size.height * 0.9,
-                           height: geo.size.height * 0.9)
-                    .padding(.leading, 12)
+            columnDivider
 
-                    Divider()
-                        .background(colors.primary.opacity(0.2))
-                        .padding(.vertical, 20)
-
-                    // RIGHT — Compass + stats
-                    VStack(spacing: 16) {
-                        // Compass
-                        CompassView(
-                            heading: location.headingDegrees,
-                            theme: themeManager.current
-                        )
-                        .frame(width: geo.size.height * 0.38,
-                               height: geo.size.height * 0.38)
-
-                        Divider()
-                            .background(colors.primary.opacity(0.15))
-                            .padding(.horizontal, 10)
-
-                        // Stats
-                        CarPlayStatsRowView(
-                            heading: location.headingDegrees,
-                            altitude: location.altitude,
-                            theme: themeManager.current
-                        )
-                    }
-                    .frame(maxWidth: .infinity)
-                    .padding(12)
-                }
+            Map(position: .constant(.userLocation(fallback: .automatic))) {
+                UserAnnotation()
             }
+            .mapStyle(.standard(elevation: .realistic))
+            .frame(width: geo.size.width * 0.42)
+            .disabled(true)
 
-            // Theme transition overlay
-            ThemeTransitionOverlay(
-                label: themeManager.transitionLabel,
-                isVisible: themeManager.isTransitioning
-            )
+            columnDivider
+
+            VStack(spacing: 10) {
+                CompassView(heading: location.headingDegrees, theme: themeManager.current)
+                    .frame(width: geo.size.height * 0.46, height: geo.size.height * 0.46)
+                HStack(spacing: 6) {
+                    StatTileView(
+                        label: "HDG",
+                        value: "\(Int(location.headingDegrees))°",
+                        unit: location.headingDegrees.cardinalDirection,
+                        theme: themeManager.current,
+                        systemImage: "location.north"
+                    )
+                    StatTileView(
+                        label: "ALT",
+                        value: "\(Int(location.altitude))",
+                        unit: "m",
+                        theme: themeManager.current,
+                        systemImage: "mountain.2"
+                    )
+                }
+                .padding(.horizontal, 8)
+            }
+            .frame(width: geo.size.width * 0.26, height: geo.size.height)
         }
+    }
+
+    private var columnDivider: some View {
+        Rectangle()
+            .fill(colors.primary.opacity(0.15))
+            .frame(width: 1)
     }
 }
 
-// MARK: - CarPlayStatsRowView
+// MARK: - MAP FOCUS  (Speed strip 17% | Map 83%)
 
-private struct CarPlayStatsRowView: View {
-    let heading: Double
-    let altitude: Double
-    let theme: MiniTheme
-    private var colors: ThemeColors { theme.colors }
+private struct MapFocusLayout: View {
+    let geo: GeometryProxy
+    @Environment(LocationService.self) private var location
+    @Environment(ThemeManager.self) private var themeManager
 
-    var body: some View {
-        HStack(spacing: 12) {
-            CarPlayStatCell(
-                label: "HDG",
-                value: "\(Int(heading))°",
-                sub: heading.cardinalDirection,
-                theme: theme,
-                icon: "location.north.fill"
-            )
-            CarPlayStatCell(
-                label: "ALT",
-                value: "\(Int(altitude))",
-                sub: "m",
-                theme: theme,
-                icon: "mountain.2.fill"
-            )
-        }
-    }
-}
-
-// MARK: - CarPlayStatCell
-
-private struct CarPlayStatCell: View {
-    let label: String
-    let value: String
-    let sub: String
-    let theme: MiniTheme
-    let icon: String
-    private var colors: ThemeColors { theme.colors }
+    private var colors: ThemeColors { themeManager.current.colors }
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 2) {
-            Label(label, systemImage: icon)
-                .font(.system(size: 9, weight: .medium, design: .monospaced))
-                .foregroundStyle(colors.primary)
-                .kerning(1)
-
-            HStack(alignment: .lastTextBaseline, spacing: 3) {
-                Text(value)
-                    .font(.system(size: 22, weight: .light, design: .monospaced))
+        HStack(spacing: 0) {
+            VStack(spacing: 4) {
+                Spacer()
+                Text("\(Int(location.speedKmh))")
+                    .font(.system(size: 52, weight: .thin, design: .monospaced))
                     .foregroundStyle(colors.text)
                     .contentTransition(.numericText())
-                    .animation(.easeOut(duration: 0.3), value: value)
-
-                Text(sub)
+                    .animation(.easeOut(duration: 0.25), value: location.speedKmh)
+                Text("km/h")
                     .font(.system(size: 11, weight: .medium, design: .monospaced))
                     .foregroundStyle(colors.primary)
+                    .kerning(1)
+                Spacer()
+                Rectangle()
+                    .fill(colors.primary.opacity(0.3))
+                    .frame(width: 28, height: 1)
+                Text(location.headingDegrees.cardinalDirection)
+                    .font(.system(size: 18, weight: .thin, design: .monospaced))
+                    .foregroundStyle(colors.textSecondary)
+                    .padding(.bottom, 4)
+                Spacer()
             }
+            .frame(width: geo.size.width * 0.17)
+            .background(colors.surface)
+
+            Map(position: .constant(.userLocation(fallback: .automatic))) {
+                UserAnnotation()
+            }
+            .mapStyle(.standard(elevation: .realistic))
+            .frame(width: geo.size.width * 0.83)
+            .disabled(true)
         }
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .padding(10)
-        .background(colors.surface.opacity(0.6), in: RoundedRectangle(cornerRadius: 10))
+    }
+}
+
+// MARK: - SPEED FOCUS  (Speedo 62% | Compass+Stats 38%)
+
+private struct SpeedFocusLayout: View {
+    let geo: GeometryProxy
+    @Environment(LocationService.self) private var location
+    @Environment(ThemeManager.self) private var themeManager
+
+    private var colors: ThemeColors { themeManager.current.colors }
+
+    var body: some View {
+        HStack(spacing: 0) {
+            SpeedometerView(speed: location.speedKmh, maxSpeed: 240, theme: themeManager.current)
+                .frame(width: geo.size.width * 0.62, height: geo.size.height)
+
+            Rectangle()
+                .fill(colors.primary.opacity(0.15))
+                .frame(width: 1)
+
+            VStack(spacing: 14) {
+                CompassView(heading: location.headingDegrees, theme: themeManager.current)
+                    .frame(width: geo.size.height * 0.52, height: geo.size.height * 0.52)
+                HStack(spacing: 10) {
+                    StatTileView(
+                        label: "HDG",
+                        value: "\(Int(location.headingDegrees))°",
+                        unit: location.headingDegrees.cardinalDirection,
+                        theme: themeManager.current,
+                        systemImage: "location.north"
+                    )
+                    StatTileView(
+                        label: "ALT",
+                        value: "\(Int(location.altitude))",
+                        unit: "m",
+                        theme: themeManager.current,
+                        systemImage: "mountain.2"
+                    )
+                }
+                .padding(.horizontal, 14)
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+        }
     }
 }
 
 // MARK: - Preview
 
-#Preview("CarPlay Landscape") {
-    CarPlayDashboardOverlayView()
+#Preview("BALANCED · 1280×480") {
+    CarPlayDashboardView()
         .environment(LocationService())
         .environment(ThemeManager())
-        .frame(width: 800, height: 480)
+        .environment(CarPlayState())
+        .frame(width: 1280, height: 480)
+}
+
+#Preview("MAP FOCUS · 1280×480") {
+    let state = CarPlayState()
+    state.currentMode = .mapFocus
+    return CarPlayDashboardView()
+        .environment(LocationService())
+        .environment(ThemeManager())
+        .environment(state)
+        .frame(width: 1280, height: 480)
+}
+
+#Preview("SPEED FOCUS · 1280×480") {
+    let state = CarPlayState()
+    state.currentMode = .speedFocus
+    return CarPlayDashboardView()
+        .environment(LocationService())
+        .environment(ThemeManager())
+        .environment(state)
+        .frame(width: 1280, height: 480)
 }

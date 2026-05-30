@@ -1,6 +1,11 @@
 import UIKit
 
-class AppDelegate: NSObject, UIApplicationDelegate {
+@MainActor
+final class AppDelegate: NSObject, UIApplicationDelegate {
+
+    let locationService = LocationService()
+    let themeManager = ThemeManager()
+
     func application(
         _ application: UIApplication,
         configurationForConnecting connectingSceneSession: UISceneSession,

@@ -11,6 +11,7 @@
 		158680DD05290F1EFFC0C488 /* StatTileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9144E31412E8021C9E4799 /* StatTileView.swift */; };
 		1E36430D953F2957A7EA190A /* MapLibre in Frameworks */ = {isa = PBXBuildFile; productRef = 2A4B8EE1901671B8ECB412CE /* MapLibre */; };
 		2D12A1CDDD0461BE150F4EED /* ThemeSwitcherView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B5AE85E429092CF51F49AC6 /* ThemeSwitcherView.swift */; };
+		32DC0CBA3317BCC90E3A9E3F /* CarPlayMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 540B51E764F12384AFC3C7D4 /* CarPlayMode.swift */; };
 		32E456041277422296950B3F /* CompassView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 254F6ED04048F368EE33D250 /* CompassView.swift */; };
 		36024F0FE76145D5C6A8FFDA /* MultipeerConnectivity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A308EB712E9C0D990BDB5CDD /* MultipeerConnectivity.framework */; };
 		389EE6A0694FCBF4F8EE0DD3 /* ThemeSwitcherView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B5AE85E429092CF51F49AC6 /* ThemeSwitcherView.swift */; };
@@ -21,11 +22,13 @@
 		558BC331EEA76D6CEEFF7096 /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 993DDDDD7856BD07201E567A /* DashboardView.swift */; };
 		57208EF3EF3A8D015B5F4061 /* TelemetryReceiver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DDF9784D3A74F18BA01EB54 /* TelemetryReceiver.swift */; };
 		5B157972A6AB88F45F7596F8 /* TelemetryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AD6ADA34BA670CDBCC0AD41 /* TelemetryModel.swift */; };
+		5B2C56DC301417E9DC282941 /* CarPlayMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 540B51E764F12384AFC3C7D4 /* CarPlayMode.swift */; };
 		5D41AC976AB2ACE060D92EC9 /* SpeedometerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226DE90E64041E2483BED3EB /* SpeedometerView.swift */; };
 		630FD8E75C141FE1A9A51E69 /* iPadPlaceholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BBEFD61F2701E7D3BF37110 /* iPadPlaceholder.swift */; };
 		67AC63557F31563DA3B5FC8D /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E380CC702FEDB1E4DEB34B6D /* CoreLocation.framework */; };
 		68BA70805C8187689339E438 /* MiniDriveApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E48A5201803DFA9ADCA87634 /* MiniDriveApp.swift */; };
 		703BA9B731B613A424B52708 /* TelemetryBroadcaster.swift in Sources */ = {isa = PBXBuildFile; fileRef = 514D6B9FDAB31FAF645F6673 /* TelemetryBroadcaster.swift */; };
+		7D00AE368287ECF0C38E39C1 /* ModeSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05802D11A17A918AB866512B /* ModeSelector.swift */; };
 		87B2E431FAD1A522E93D05A3 /* CarPlayDashboardOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21CF5018BF77B45874FF81EE /* CarPlayDashboardOverlayView.swift */; };
 		8FB732A2D8FF81286B8C2253 /* StatTileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9144E31412E8021C9E4799 /* StatTileView.swift */; };
 		9358F55A526BF10E66CA8FF6 /* TelemetryBroadcaster.swift in Sources */ = {isa = PBXBuildFile; fileRef = 514D6B9FDAB31FAF645F6673 /* TelemetryBroadcaster.swift */; };
@@ -42,6 +45,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		05802D11A17A918AB866512B /* ModeSelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModeSelector.swift; sourceTree = "<group>"; };
 		1CC91E8BE8C29618FDE742BE /* CarPlaySceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarPlaySceneDelegate.swift; sourceTree = "<group>"; };
 		21CF5018BF77B45874FF81EE /* CarPlayDashboardOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarPlayDashboardOverlayView.swift; sourceTree = "<group>"; };
 		226DE90E64041E2483BED3EB /* SpeedometerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeedometerView.swift; sourceTree = "<group>"; };
@@ -49,6 +53,7 @@
 		4743180BA8E6ECF3662C4D78 /* MiniDrive.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = MiniDrive.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4BBEFD61F2701E7D3BF37110 /* iPadPlaceholder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iPadPlaceholder.swift; sourceTree = "<group>"; };
 		514D6B9FDAB31FAF645F6673 /* TelemetryBroadcaster.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TelemetryBroadcaster.swift; sourceTree = "<group>"; };
+		540B51E764F12384AFC3C7D4 /* CarPlayMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarPlayMode.swift; sourceTree = "<group>"; };
 		581F00026263DD1EEBC4951D /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
 		7A600197FC5DB8F56DD3C554 /* MiniTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniTheme.swift; sourceTree = "<group>"; };
 		7AD6ADA34BA670CDBCC0AD41 /* TelemetryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TelemetryModel.swift; sourceTree = "<group>"; };
@@ -103,6 +108,7 @@
 			children = (
 				21CF5018BF77B45874FF81EE /* CarPlayDashboardOverlayView.swift */,
 				1CC91E8BE8C29618FDE742BE /* CarPlaySceneDelegate.swift */,
+				05802D11A17A918AB866512B /* ModeSelector.swift */,
 			);
 			path = CarPlay;
 			sourceTree = "<group>";
@@ -176,6 +182,7 @@
 		B0E07B387C2641D2BA405573 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				540B51E764F12384AFC3C7D4 /* CarPlayMode.swift */,
 				7A600197FC5DB8F56DD3C554 /* MiniTheme.swift */,
 				7AD6ADA34BA670CDBCC0AD41 /* TelemetryModel.swift */,
 			);
@@ -287,6 +294,7 @@
 			files = (
 				9EACD449352478BBBC1D2517 /* AppDelegate.swift in Sources */,
 				87B2E431FAD1A522E93D05A3 /* CarPlayDashboardOverlayView.swift in Sources */,
+				32DC0CBA3317BCC90E3A9E3F /* CarPlayMode.swift in Sources */,
 				48F61596B2B015EBF67F6E43 /* CarPlaySceneDelegate.swift in Sources */,
 				32E456041277422296950B3F /* CompassView.swift in Sources */,
 				FE885DEC681051705A390371 /* ContentView.swift in Sources */,
@@ -294,6 +302,7 @@
 				09898B95B198DBC3B74AFB90 /* LocationService.swift in Sources */,
 				68BA70805C8187689339E438 /* MiniDriveApp.swift in Sources */,
 				A9AD5BDA8D89764CB2A3925A /* MiniTheme.swift in Sources */,
+				7D00AE368287ECF0C38E39C1 /* ModeSelector.swift in Sources */,
 				435D62ACC96F71650B55AC6A /* SpeedometerView.swift in Sources */,
 				158680DD05290F1EFFC0C488 /* StatTileView.swift in Sources */,
 				703BA9B731B613A424B52708 /* TelemetryBroadcaster.swift in Sources */,
@@ -307,6 +316,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5B2C56DC301417E9DC282941 /* CarPlayMode.swift in Sources */,
 				D0315A7991AAD5CEB93FD5A2 /* CompassView.swift in Sources */,
 				FAA752134A7D9E3912FA1990 /* LocationService.swift in Sources */,
 				C87C54D21E6AFD89D2816010 /* MiniDrivePadApp.swift in Sources */,
